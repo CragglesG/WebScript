@@ -20,8 +20,28 @@ export class Var {
     }
 }
 
+export class Binary {
+    constructor(left, operator, right) {
+        this.type = 'Binary'
+        this.left = left
+        this.operator = operator
+        this.right = right
+    }
+}
+
+export class Func {
+    constructor(name, params, body) {
+        this.type = 'Func'
+        this.name = name
+        this.params = params
+        this.body = body
+    }
+}
+
 export default {
     Literal,
     Array,
-    Var
+    Var,
+    Binary,
+    Func
 }

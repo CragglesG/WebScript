@@ -1,0 +1,39 @@
+[
+  {
+    "type": "Array",
+    "value": [
+      {
+        "type": "Binary",
+        "left": {
+          "type": "Literal",
+          "value": 4
+        },
+        "operator": "+",
+        "right": {
+          "type": "Literal",
+          "value": 21
+        }
+      }
+    ]
+  },
+  {
+    "type": "Binary",
+    "left": {
+      "type": "Literal",
+      "value": 2006
+    },
+    "operator": "/",
+    "right": {
+      "type": "Binary",
+      "left": {
+        "type": "Literal",
+        "value": 4012
+      },
+      "operator": "+",
+      "right": {
+        "type": "Literal",
+        "value": 2
+      }
+    }
+  }
+]
