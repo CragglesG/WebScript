@@ -148,11 +148,12 @@ export class Parser {
 
     stmt() {
         const returnStmt = () => {
-            this.eatKeyword('finished')
+            this.eatKeyword('finish')
             return new Ast.Return(this.expr())
         }
+
         const funcStmt = () => {
-            this.eatKeyword('sketch')
+            this.eatKeyword('func')
             const name = this.eat(TOKENS.Identifier).value
 
             let params = []
@@ -171,13 +172,97 @@ export class Parser {
             return new Ast.Func(name, params, body)
         }
 
+        const forStmt = () => {
+            this.eatKeyword('loop')
+            const id = this.eat(TOKENS.Identifier).value
+            this.eatKeyword('through')
+
+            this.eat(TOKENS.LeftParen)
+            const range = this.exprList()
+            if (range.length !== 2)
+                this.error(
+                    range[range.length - 1],
+                    'Expected (start, end) range but received more arguments than expected'
+                )
+            this.eat(TOKENS.RightParen)
+
+            this.eat(TOKENS.LeftBrace)
+            let body = []
+            while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
+            this.eat(TOKENS.RightBrace)
+            
+            return new Ast.For(id, range, body)
+        }
+
+        const whileStmt = () => {
+            this.eatKeyword('while')
+
+            this.eat(TOKENS.LeftParen)
+            const condition =  this.expr()
+            this.eat(TOKENS.RightParen)
+
+            this.eat(TOKENS.LeftBrace)
+            let body = []
+            while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
+            this.eat(TOKENS.RightBrace)
+
+            return new Ast.While(condition, body)
+        }
+
+        const conditionalStmt = keyword => {
+            this.eatKeyword(keyword)
+
+            let condition = new Ast.Literal(true)
+            if (keyword !== 'else') {
+                this.eat(TOKENS.LeftParen)
+                condition = this.expr()
+                this.eat(TOKENS.RightBrace)
+            }
+
+            this.eat(TOKENS.LeftBrace)
+            let body = []
+            while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
+            this.eat(TOKENS.RightBrace)
+
+            let otherwise = []
+            while (this.peekKeyword('elif') || this.peekKeyword('else'))
+                otherwise.push(conditionalStmt(this.peek().value))
+
+            return new Ast.Conditional(condition, body, otherwise)
+        }
+
+        const assignStmt = () => {
+            this.eatKeyword('prepare')
+            const name = this.eat(TOKENS.Identifier).value
+            if (this.peekType() === TOKENS.Period) {
+                this.eat(TOKENS.Period)
+                const property = this.eat(TOKENS.Identifier).value
+                this.eatKeyword('as')
+                const value = this.expr()
+                return new Ast.Set(name, property, value)
+            }
+            this.eatKeyword('as')
+            const value = this.expr()
+            return new Ast.Var(name, value)
+        }
+
         const next = this.peek()
         switch(next.type) {
             case TOKENS.Keyword: {
                 switch (next.value) {
-                    case 'finished':
+                    case 'prepare':
+                        return assignStmt()
+                    case 'if':
+                        return conditionalStmt('if')
+                    case 'while':
+                        return whileStmt()
+                    case 'loop': {
+                        return forStmt()
+                    }
+                    case 'finished': {
                         return returnStmt()
-                    case 'sketch': {
+                    }
+                    case 'func': {
                         return funcStmt()
                     }
                 }
