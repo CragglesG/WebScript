@@ -1,4 +1,21 @@
-import { EaselError } from './stdlib.js'
+import { WebScriptError } from './stdlib.js'
+
+export const KEYWORDS = {
+        prepare: 'prepare',
+        as: 'as', // Variables
+        brush: 'brush',
+        prep: 'prep',
+        has: 'has', // Structs
+        sketch: 'sketch',
+        needs: 'needs',
+        finished: 'finished', // Functions
+        loop: 'loop',
+        through: 'through',
+        while: 'while', // Loops
+        if: 'if',
+        elif: 'elif',
+        else: 'else' // Conditionals
+}
 
 export const TOKENS = {
     LeftParen: 'LeftParen',
@@ -54,7 +71,7 @@ export class Lexer {
     }
 
     error(msg) {
-        throw new EaselError(`Error on ${this.line}:${this.column}: ${msg}`)
+        throw new WebScriptError(`Error on ${this.line}:${this.column}: ${msg}`)
     }
 
     peek() {
@@ -70,7 +87,10 @@ export class Lexer {
 
     scanToken() {
         const char = this.advance()
-
+        const isNumber = char => char >= '0' && char <= '9'
+        const isChar = char =>
+            (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === '_'
+        const isAlphanumeric = char => isNumber(char) || isChar(char)
         switch (char) {
             case '(': {
                 return this.tokens.push(
@@ -133,9 +153,12 @@ export class Lexer {
                 )
             }
             case '/': {
-                return this.tokens.push(
-                    new Token(TOKENS.Slash, '/', '/', this.line, this.column)
-                )
+                if (this.match('/'))
+                    while (this.peek() !== '\n' && this.peek !== '\0') this.advance()
+                else
+                    return this.tokens.push(
+                        new Token(TOKENS.Slash, '/', '/', this.line, this.column)
+                    )
             }
             case "'":
             case '"': {
@@ -143,7 +166,7 @@ export class Lexer {
                 let string = []
                 while (this.peek() !== char) {
                     string.push(this.advance())
-                    if (this.peek == '\0')
+                    if (this.peek === '\0')
                         // String wasn't closed
                         this.error('Unexpected EOF; expected a closing quote')
                 }
@@ -198,16 +221,65 @@ export class Lexer {
                     new Token(TOKENS.Not, '!', '!', this.line, this.column)
                 )
             }
+            case ' ':
+            case '\r': {
+                // Ignore whitespace
+                return
+            }
+            case '\n': {
+                // Also ignore, but update line
+                this.line++
+                this.column = 0
+                return
+            }
+            default:
+                if (isNumber(char)) {
+                    let number = [char]
+                    while (isNumber(this.peek()) || (this.peek() === "." && !number.includes(".")))
+                        number.push(this.advance())
+                    number = number.join("")
+                    return this.tokens.push(
+                        new Token(
+                            TOKENS.Number,
+                            number,
+                            Number(number),
+                            this.line,
+                            this.column
+                        )
+                    )
+                } else if (isChar(char)) {
+                    // Identifier or keyword
+                    let identifier = [char]
+                    while (isAlphaumeric(this.peek())) identifier.push(this.advance())
+                    identifier = identifier.join('')
+                    if (Object.keys(KEYWORDS).includes(identifier))
+                        return this.tokens.push(
+                            new Token(
+                                TOKENS.Keyword,
+                                identifier,
+                                KEYWORDS[identifier],
+                                this.line,
+                                this.column
+                            )
+                        )
+                    else if (identifier === 'true' || identifier === 'false')
+                        return this.tokens.push(
+                            new Token(TOKENS.Boolean, identifier, identifier === 'true')  
+                        )
+                    return this.tokens.push(
+                        new Token(TOKENS.Identifier, identifier, identifier, this.line, this.column)
+                    )
+                } else this.error('Unexpected symbol ' + char)
         }
     }
     
     match(char) {
-        if (this.peek() == char) return this.advance
+        if (this.peek() === char) return this.advance
         return false
     }
 
     scanTokens() {
-        while (this.peek() /= '\0') this.scanToken()
+        while (this.peek() != '\0') this.scanToken()
         this.tokens.push(new Token(TOKENS.EOF, null, null, this.line, this.column))
         return this.tokens
     }

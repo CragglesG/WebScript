@@ -18,7 +18,7 @@ const writeFile = (location, data) =>
 
 ;(async () => {
     let argv = process.argv.slice(2)
-    const debug = argv.find(cmd => cmd == '--dbg') ? true : false
+    const debug = argv.find(cmd => cmd === '--dbg') ? true : false
     argv = argv.filter(arg => arg !== '--dbg')
 
     const location = argv[0]
