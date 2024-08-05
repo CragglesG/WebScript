@@ -107,6 +107,24 @@ export class Parser {
     simple() {
         let token = this.eat(this.peekType())
         switch (token.type) {
+            case TOKENS.Keyword: {
+                if (token.value === 'prep') {
+                    const id = this.eat(TOKENS.Identifier).value
+                    
+                    this.eat(TOKENS.LeftParen)
+                    let members = {}
+                    while (this.peekType() !== TOKENS.RightParen) {
+                        const member = this.eat(TOKENS.Identifier).value
+                        this.eat(TOKENS.Colon)
+                        members[member] = this.expr()
+                        if (this.peekType() === TOKENS.Comma) this.eat(TOKENS.Comma)
+                    }
+                    this.eat(TOKENS.RightParen)
+
+                    return new Ast.Instance(id, members)
+                }
+                break
+            }
             case TOKENS.String:
             case TOKENS.Number:
             case TOKENS.Boolean: {
@@ -130,8 +148,40 @@ export class Parser {
         this.error(token, "Expected experssion but got " + token)
     }
 
+    call() {
+        let expr = this.simple()
+        while (true) {
+            if (this.peekType() === TOKENS.LeftParen) {
+                this.eat(TOKENS.LeftParen)
+                let args = []
+                if (this.peekType() === TOKENS.RightParen) args = this.exprList()
+                this.eat(TOKENS.RightParen)
+                expr = new Ast.Call(expr, args)
+            } else if (this.peekType() === TOKENS.LeftBracket) {
+                this.eat(TOKENS.LeftBracket)
+                const property = this.expr()
+                this.eat(TOKENS.RightBracket)
+                expr = new Ast.Get(expr, property, true)
+            } else if (this.peekType() === TOKENS.Period) {
+                this.eat(TOKENS.Period)
+                const property = this.eat(TOKENS.Identifier).value
+                expr = new Ast.Get(expr, property)
+            } else break
+        }
+        return expr
+    }
+
+    unary() {
+        if (this.peekType() === TOKENS.Not) {
+            const op = this.eat(this.peekType()).value
+            return new Ast.Unary(op, this.unary())
+        }
+
+        return this.call()
+    }
+
     expr() {
-        const left = this.simple()
+        const left = this.unary()
         if (isOp(this.peekType())) {
             const op = this.eat(this.peekType()).value
             let right = this.expr()
@@ -246,25 +296,34 @@ export class Parser {
             return new Ast.Var(name, value)
         }
 
+        const structStmt = () => {
+            this.eatKeyword('type')
+            const name = this.eat(TOKENS.Identifier).value
+            this.eatKeyword('has')
+            this.eat(TOKENS.LeftBrace)
+            const members = this.identifierList()
+            this.eat(TOKENS.RightBrace)
+            return new Ast.Struct(name, members)
+        }
+
         const next = this.peek()
         switch(next.type) {
             case TOKENS.Keyword: {
                 switch (next.value) {
+                    case 'type':
+                        return structStmt()
                     case 'prepare':
                         return assignStmt()
                     case 'if':
                         return conditionalStmt('if')
                     case 'while':
                         return whileStmt()
-                    case 'loop': {
+                    case 'loop':
                         return forStmt()
-                    }
-                    case 'finished': {
+                    case 'finished':
                         return returnStmt()
-                    }
-                    case 'func': {
+                    case 'func':
                         return funcStmt()
-                    }
                 }
             }
             default: {

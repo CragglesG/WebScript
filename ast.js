@@ -80,6 +80,47 @@ export class Set {
     }
 }
 
+export class Struct {
+    constructor(name, members) {
+        this.type = 'Struct'
+        this.name = name
+        this.members = members
+    }
+}
+
+export class Instance {
+    constructor(name, members) {
+        this.type = 'Instance'
+        this.name = name
+        this.members = members
+    }
+}
+
+export class Call {
+    constructor(caller, args) {
+        this.tye = 'Call'
+        this.caller = caller
+        this.args = args
+    }
+}
+
+export class Get {
+    constructor(caller, property, isExpr = false) {
+        this.type = 'Get'
+        this.caller = caller
+        this.property = property
+        this.isExpr = isExpr
+    }
+}
+
+export class Unary {
+    constructor(operator, apply) {
+        this.type = 'Unary'
+        this.operator = operator
+        this.apply = apply
+    }
+}
+
 export default {
     Literal,
     Array,
@@ -90,5 +131,10 @@ export default {
     For,
     While,
     Conditional,
-    Set
+    Set,
+    Struct,
+    Instance,
+    Call,
+    Get,
+    Unary
 }
