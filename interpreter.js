@@ -69,11 +69,11 @@ export class Interpreter {
                 if (!this.inScope(scope, value.name))
                     this.error(`${value.name} is not defined in current scope`)
 
-                    const constructor = scope[value.name]
-                    let members = {}
-                    for (let [member, memberValue] of Object.entries(value.members))
-                        members[member] = this.evaluate(memberValue, scope)
-                    return constructor(members) 
+                const constructor = scope[value.name]
+                let members = {}
+                for (let [member, memberValue] of Object.entries(value.members))
+                    members[member] = this.evaluate(memberValue, scope)
+                return constructor(members) 
             }
             case Ast.Call: {
                 const caller = this.evaluate(value.caller, scope)
@@ -119,6 +119,7 @@ export class Interpreter {
                     }
                     return instance
                 }
+                return scope
             case Ast.Func: {
                 const func = args => {
                     let localScope = { ...scope }

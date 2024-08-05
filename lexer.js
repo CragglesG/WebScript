@@ -6,7 +6,7 @@ export const KEYWORDS = {
         type: 'type',
         prep: 'prep',
         has: 'has', // Structs
-        sketch: 'sketch',
+        func: 'func',
         needs: 'needs',
         finished: 'finished', // Functions
         loop: 'loop',
@@ -153,12 +153,13 @@ export class Lexer {
                 )
             }
             case '/': {
-                if (this.match('/'))
-                    while (this.peek() !== '\n' && this.peek !== '\0') this.advance()
-                else
-                    return this.tokens.push(
-                        new Token(TOKENS.Slash, '/', '/', this.line, this.column)
-                    )
+                if (this.match('/')) {
+                    while (this.peek() !== '\n' && this.peek() !== '\0') this.advance()
+                    return
+                }
+                return this.tokens.push(
+                    new Token(TOKENS.Slash, '/', '/', this.line, this.column)
+                )
             }
             case "'":
             case '"': {

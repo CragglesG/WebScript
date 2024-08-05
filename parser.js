@@ -145,7 +145,7 @@ export class Parser {
                 return expr
             }
         }
-        this.error(token, "Expected experssion but got " + token)
+        this.error(token, "Expected expression but got " + token)
     }
 
     call() {
