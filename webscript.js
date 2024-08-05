@@ -1,6 +1,10 @@
 import fs from 'fs';
+import readline from 'node:readline'
 import { Lexer } from './lexer.js'
 import { Parser } from './parser.js'
+import { Interpreter } from './interpreter.js'
+import stdlib, { WebScriptError } from './stdlib.js'
+import { errorMonitor } from 'events';
 
 const readFile = location =>
     new Promise((resolve, reject) =>
@@ -46,7 +50,62 @@ const writeFile = (location, data) =>
         } finally {
             if (debug) await writeFile('ast.json', JSON.stringify(parser.ast, null, 2))
         }
+
+        const interpreter = new Interpreter()
+        try {
+            interpreter.run(parser.ast, stdlib)
+        } catch (err) {
+            console.log(err)
+        }
     } else {
-        // Interactive REPL time!
+        const interpreter =  new Interpreter()
+        let scope = {
+            ...stdlib,
+            exit: () => process.exit(0)
+        }
+        const input = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        })
+
+        process.on('SIGINT', () => {
+            input.close()
+        })
+
+        const repl = line => {
+            let hadError = false
+
+            const lexer = new Lexer(line)
+            try {
+                lexer.scanTokens()
+            } catch (err) {
+                if (err instanceof WebScriptError) {
+                    hadError = true
+                    console.log(err.toString())
+                } else throw err
+            }
+
+            if (!hadError) {
+                const parser = new Parser(lexer.tokens)
+                try {
+                    parser.parse()
+                } catch (err) {
+                    if (err instanceof WebScriptError) console.log(err.toString())
+                    else throw err
+                }
+
+                try {
+                    scope = interpreter.run(parser.ast, scope)
+                } catch (err) {
+                    if (err instanceof WebScriptError) console.log(err.toString())
+                    else throw err
+                }
+            }
+
+
+            input.question('> ', repl)
+        }
+
+        input.question('> ', repl)
     } 
 })()

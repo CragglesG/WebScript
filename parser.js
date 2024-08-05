@@ -66,7 +66,7 @@ export class Parser {
         if (this.peekType() === type) return this.tokens[this.current++]
         this.error(
             this.peek(),
-            `Expected ${type}  but got ${this.peekType().toString()}`
+            `Expected ${type} but got ${this.peekType().toString()}`
         )
     }
 
@@ -154,7 +154,7 @@ export class Parser {
             if (this.peekType() === TOKENS.LeftParen) {
                 this.eat(TOKENS.LeftParen)
                 let args = []
-                if (this.peekType() === TOKENS.RightParen) args = this.exprList()
+                if (this.peekType() !== TOKENS.RightParen) args = this.exprList()
                 this.eat(TOKENS.RightParen)
                 expr = new Ast.Call(expr, args)
             } else if (this.peekType() === TOKENS.LeftBracket) {

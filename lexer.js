@@ -3,7 +3,7 @@ import { WebScriptError } from './stdlib.js'
 export const KEYWORDS = {
         prepare: 'prepare',
         as: 'as', // Variables
-        brush: 'brush',
+        type: 'type',
         prep: 'prep',
         has: 'has', // Structs
         sketch: 'sketch',
@@ -14,7 +14,7 @@ export const KEYWORDS = {
         while: 'while', // Loops
         if: 'if',
         elif: 'elif',
-        else: 'else' // Conditionals
+        else: 'else', // Conditionals
 }
 
 export const TOKENS = {
@@ -94,7 +94,7 @@ export class Lexer {
         switch (char) {
             case '(': {
                 return this.tokens.push(
-                    new Token(TOKENS,LeftParen, '(', '('. this.line, this.column)
+                    new Token(TOKENS.LeftParen, '(', '(', this.line, this.column)
                 )
             }
             case ')': {
@@ -250,7 +250,7 @@ export class Lexer {
                 } else if (isChar(char)) {
                     // Identifier or keyword
                     let identifier = [char]
-                    while (isAlphaumeric(this.peek())) identifier.push(this.advance())
+                    while (isAlphanumeric(this.peek())) identifier.push(this.advance())
                     identifier = identifier.join('')
                     if (Object.keys(KEYWORDS).includes(identifier))
                         return this.tokens.push(

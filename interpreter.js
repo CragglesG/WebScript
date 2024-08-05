@@ -1,6 +1,14 @@
 import Ast from './ast.js'
 import { WebScriptError } from './stdlib.js'
 
+Array.prototype.add = function (args) {
+    this.push(...args)
+}
+
+Array.prototype.get = function ([index]) {
+    return this[index]
+}
+
 export class ReturnException extends Error {
     constructor(value) {
         super()
@@ -18,6 +26,9 @@ export class Interpreter {
     }
 
     evaluate(value, scope) {
+        if (typeof value == "undefined") {
+            throw new WebScriptError(`Runtime error: value is not defined`)
+        }
         switch (value.constructor) {
             case Ast.Var: {
                 if (!this.inScope(scope, value.name))
@@ -71,6 +82,16 @@ export class Interpreter {
                 for (let arg of value.args) args.push(this.evaluate(arg, scope))
                 return caller(args)
             }
+            case Ast.Get:
+                const caller = this.evaluate(value.caller, scope)
+
+                let get 
+                if (value.isExpr) get = caller[this.evaluate(value.property, scope)]
+                else get = caller[value.property]
+
+                if (get instanceof Function) return get.bind(caller)
+                return get
+
             default: {
                 this.error("Expected expression but got statement")
             }
@@ -82,7 +103,12 @@ export class Interpreter {
             case Ast.Var:
                 scope[node.name] = this.evaluate(node.value, scope)
                 return scope
-            case Ast.Set:
+            case Ast.Set: {
+                if (!this.inScope(scope, node.caller))
+                    this.error(`${node.caller} is not defined in current scope`)
+                scope[node.caller][node.property] = this.evaluate(node.value, scope)
+                return scope
+            }
             case Ast.Struct:
                 scope[node.name] = members => {
                     let instance = {}
@@ -136,5 +162,8 @@ export class Interpreter {
         return scope
     }
 
-    run(ast, scope) {}
+    run(ast, scope) {
+        for (const node of ast) scope = this.execute(node, scope)
+        return scope
+    }
 }
