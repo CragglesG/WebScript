@@ -1,13 +1,13 @@
 {
   "name": "webscript",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "webscript.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["language", "webscript", "hack club"],
+  "author": "Craig Giles",
+  "license": "MIT",
   "description": "",
   "type": "module"
 }
