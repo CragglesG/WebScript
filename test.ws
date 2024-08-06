@@ -16,9 +16,8 @@ prepare array as "oops"
 display(array)
 type S has { x,y,z }
 prep S( x:1, y:2, z:3 )
-display(S())
 
 prepare g as request
-prepare g.url as 'https://google.ie'
+prepare g.url as 'https://www.google.ie'
 
-g.get()
+display(g.get())

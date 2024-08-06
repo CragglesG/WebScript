@@ -1,4 +1,4 @@
-import axios from "axios"
+import { XMLHttpRequest } from "xmlhttprequest"
 
 export class WebScriptError extends Error {
     constructor(msg) {
@@ -14,24 +14,14 @@ export class WebScriptError extends Error {
 export class Request {
     constructor(url) {
         this.url = url
-        this.data
-        this.status
-        this.headers
     }
 
     get() {
-        axios.get(this.url)
-            .then(function (response) {
-                this.data = response.data
-                this.status = response.status
-                this.headers = response.headers
-
-            })
-            .catch(function (error) {
-                throw new WebScriptError(`GET Request Error: ${error}`)
-            })
+        const HTTPRequest = new XMLHttpRequest()
+        HTTPRequest.open("GET", this.url, false)
+        HTTPRequest.send(null)
+        return HTTPRequest
     }
-    
 }
 
 export default {
