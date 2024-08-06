@@ -22,6 +22,20 @@ export class Request {
         HTTPRequest.send(null)
         return HTTPRequest
     }
+
+    post(body=null) {
+        // STRICT PROTOTYPE - WILL MOST LIKELY NOT FUNCTION
+        const HTTPRequest = new XMLHttpRequest()
+        HTTPRequest.open("POST", this.url, false)
+        HTTPRequest.send(body)
+    }
+
+    delete(body=null) {
+        // STRICT PROTOTYPE - WILL MOST LIKELY NOT FUNCTION 
+        const HTTPRequest = new XMLHttpRequest()
+        HTTPRequest.open("DELETE", this.url, false)
+        HTTPRequest.send(body)
+    }
 }
 
 export default {
