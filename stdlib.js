@@ -16,24 +16,44 @@ export class Request {
         this.url = url
     }
 
-    get() {
+    get(headers=[]) {
         const HTTPRequest = new XMLHttpRequest()
         HTTPRequest.open("GET", this.url, false)
+        for (let i = 0; i < headers.length; i++) {
+            HTTPRequest.setRequestHeader(headers[i][0], headers[i][1])
+        }
         HTTPRequest.send(null)
         return HTTPRequest
     }
 
-    post(body=null) {
-        // STRICT PROTOTYPE - WILL MOST LIKELY NOT FUNCTION
+    post(body=null, headers=[]) {
+        // May be unstable - has not yet been tested
         const HTTPRequest = new XMLHttpRequest()
         HTTPRequest.open("POST", this.url, false)
+        for (let i = 0; i < headers.length; i++) {
+            HTTPRequest.setRequestHeader(headers[i][0], headers[i][1])
+        }
+        HTTPRequest.setRequestHeader()
         HTTPRequest.send(body)
     }
 
-    delete(body=null) {
-        // STRICT PROTOTYPE - WILL MOST LIKELY NOT FUNCTION 
+    put(body=null, headers=[]) {
+        // May be unstable - has not yet been tested
+        const HTTPRequest = new XMLHttpRequest()
+        HTTPRequest.open("PUT", this.url, false)
+        for (let i = 0; i < headers.length; i++) {
+            HTTPRequest.setRequestHeader(headers[i][0], headers[i][1])
+        }
+        HTTPRequest.send(body)
+    }
+
+    delete(body=null, headers=[]) {
+        // May be unstable - has not yet been tested
         const HTTPRequest = new XMLHttpRequest()
         HTTPRequest.open("DELETE", this.url, false)
+        for (let i = 0; i < headers.length; i++) {
+            HTTPRequest.setRequestHeader(headers[i][0], headers[i][1])
+        }
         HTTPRequest.send(body)
     }
 }
