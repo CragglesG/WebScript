@@ -10,3 +10,9 @@ WebScript is an in-development programming language designed to be simple but po
 
 ## Installation Guide
 While the installation process is quick and straightfoward, it differs slightly by OS. Please skip to the installation guide for the OS you are using.
+
+### Linux
+To quick install WebScript to `~/.webscript`, run the following command:
+```
+
+```
