@@ -14,6 +14,7 @@ _Want to contribute? You can find good first issues [here](https://github.com/Cr
   - [Windows](#windows)
 - [Command Line Usage](#command-line-usage)
 - [Syntax](#syntax)
+  - [Standard Library](#standard-library
 
 ## Installation Guide
 
@@ -108,14 +109,38 @@ webscript FILE --dbg
 ```
 
 ## Syntax
-WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (It was orignally made using the tutorial, but is constantly being modified and improved.)
+WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but is constantly being modified and improved.)
 It also shares some similarities with the language it is written in, JavaScript. Below is a table of the current WebScript syntax:
 
-| Operation                 | Syntax                                       | Notes                                                                                                                             |
-|---------------------------|----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Declare/Mutate Variable   | `prepare NAME as VALUE`                      | This syntax is also used to modify object attributes, for example:  `prepare obj.attr as 'attr'`                                  |
-| Define Struct             | `type NAME has { PROPERTIES }`               | N/A                                                                                                                               |
-| Create Instance of Struct | `prep NAME(PROPERTIES)`                      | `NAME` should be the name of the struct. References to the name of the struct after instance creation will refer to the instance. |
-| Define Function           | `func NAME needs (PARAMS) { BODY }`          | Whitespace is always ignored, so it is not necessary here, but it is recommended for readability.                                 |
-| Return from Function      | `finished VALUE`                             | N/A                                                                                                                               |
-| For Loop                  | `loop COUNTER through (START, END) { BODY }` | `COUNTER` should usually, by convention, be  `i`.                                                                                 |
+| Operation                 | Syntax                                                             | Notes                                                                                                                 |
+|---------------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Declare/Mutate Variable   | `prepare NAME as VALUE`                                            | This syntax is also used to modify object attributes, for example:  `prepare obj.attr as 'attr'`                      |
+| Define Struct             | `type NAME has { PROPERTIES }`                                     | -                                                                                                                     |
+| Create Instance of Struct | `prep NAME(PROPERTIES)`                                            | `NAME` should be the name of the struct. References to the struct after instance creation will refer to the instance. |
+| Define Function           | `func NAME needs (PARAMS) { BODY }`                                | Whitespace is always ignored, but it is recommended for readability.                                                  |
+| Return from Function      | `finished VALUE`                                                   | -                                                                                                                     |
+| Loop through Range        | `loop COUNTER through (START, END) { BODY }`                       | `COUNTER` should usually, by convention, be  `i`.                                                                     |
+| Loop While True           | `while (CONDITION) { BODY }`                                       | -                                                                                                                     |
+| If/Else-if/Else Statement | ` if (CONDITION) { BODY } elif (CONDITION) { BODY } else { BODY }` | -                                                                                                                     |
+| Exit REPL                 | `exit()`                                                           | Only available in REPL mode.                                                                                          |
+| Equivalent                | `==`                                                               | -                                                                                                                     |
+| Not Equivalent            | `!=`                                                               | -                                                                                                                     |
+| Greater Than              | `>`                                                                | -                                                                                                                     |
+| Less Than                 | `<`                                                                | -                                                                                                                     |
+| Addition                  | `+`                                                                | -                                                                                                                     |
+| Multiplication            | `*`                                                                | -                                                                                                                     |
+| Subtraction               | `-`                                                                | -                                                                                                                     |
+| Division                  | `/`                                                                | -                                                                                                                     |
+| Or                        | `\|\|`                                                             | -                                                                                                                     |
+| Comment                   | `//`                                                               | -                                                                                                                     |
+| String                    | `''` or `""`                                                       | Strings should be ended with the same type of quotation mark they begun with.                                         |
+
+### Standard Library
+WebScript's Standard Library provides numerous useful methods and objects to programmers. Below is a table of all included methods and objects:
+
+| Name      | Use                       | Description                                                                                    |
+|-----------|---------------------------|------------------------------------------------------------------------------------------------|
+| `display` | `display(ARGS)`           | Prints `ARGS` to the console using `console.log()`. Accepts multiple arguments.                |
+| `random`  | `random([MIN, MAX])`      | Chooses a random number between `MIN` and `MAX` using `Math.random()`.                         |
+| `round`   | `round(NUMBER)`           | Rounds `NUMBER` to the nearest whole number using `Math.round()`.                              |
+| `request` | `prepare NAME as request` | `request` is a request object that utilises `XMLHttpRequest`. Use is further documented below. |
