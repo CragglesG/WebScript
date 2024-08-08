@@ -15,6 +15,7 @@ _Want to contribute? You can find good first issues [here](https://github.com/Cr
 - [Command Line Usage](#command-line-usage)
 - [Syntax](#syntax)
   - [Standard Library](#standard-library)
+    - [request](#request)
 
 ## Installation Guide
 
@@ -145,7 +146,7 @@ WebScript's Standard Library provides numerous helpful methods and objects for y
 | `round`   | `round(NUMBER)`           | Rounds `NUMBER` to the nearest whole number using `Math.round()`.                              |
 | `request` | `prepare NAME as request` | `request` is a request object that utilises `XMLHttpRequest`. Use is further documented below. |
 
-### `request`
+#### `request`
 The `request` object is provided in the Standard Library to allow GET, POST, PUT, and DELETE requests to be easily sent through HTTP. A table of all attributes and methods is provided below:
 
 | Method/Attribute                        | Use                             | Description                                                    |
