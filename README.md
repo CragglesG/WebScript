@@ -55,7 +55,9 @@ Done! You can now use the command `webscript` to run WebScript.
 
 ### macOS
 
-This process is much the same as the process for Linux, with the only difference being slightly different download links. However, this process not yet been tested on macOS and may not function as intended.
+_WARNING: This has not yet been tested and may not work as intended._
+
+This process is much the same as the process for Linux, with the only difference being slightly different download links.
 
 **WebScript requires that your default shell is set to zsh. If you are running macOS Catalina 10.15 or higher, and you have not changed your default shell, you are already using zsh.**
 
@@ -93,7 +95,23 @@ Done! You can now use the command `webscript` to run WebScript.
 
 ### Windows
 
-_Support for Windows is coming soon._
+_WARNING: This has not yet been tested and may not work as intended._
+
+Before installing WebScript, you must enable execution of local scripts. You can do this using the following command in PowerShell (Run as administrator):
+
+```
+Set-ExecutionPolicy RemoteSigned
+```
+
+To install WebScript run the following in PowerShell (Do not run as administrator):
+
+```
+New-Item -ItemType Directory -Path "$env:USERPROFILE/.webscript"
+git clone "https://github.com/CragglesG/Easel/" "$env:USERPROFILE/.webscript"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE/.webscript/windows/", "User")
+```
+
+Done! You can now use the command `webscript` to run WebScript.
 
 ## Command Line Usage
 Once installed, you can use WebScript with the `webscript` command. To enter REPL, simply run `webscript` alone:

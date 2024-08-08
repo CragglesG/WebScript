@@ -1,0 +1,11 @@
+param(
+    [Parameter(
+        Position = 0
+    )]
+    [double]$file,
+    [Parameter(
+        Position = 1
+    )]
+    [double]$debug
+)
+node $env:USERPROFILE/.webscript/webscript.js $file $debugs
