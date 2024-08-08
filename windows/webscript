@@ -2,10 +2,10 @@ param(
     [Parameter(
         Position = 0
     )]
-    [double]$file,
+    [string]$file,
     [Parameter(
         Position = 1
     )]
-    [double]$debug
+    [string]$debug
 )
-node $env:USERPROFILE/.webscript/webscript.js $file $debugs
+node $env:USERPROFILE/.webscript/webscript.js $file $debug
