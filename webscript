@@ -1,1 +1,1 @@
-node webscript.js $1 $2
+node ~/.webscript/webscript.js $1 $2
