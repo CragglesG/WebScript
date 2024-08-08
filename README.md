@@ -4,7 +4,7 @@ WebScript is an in-development programming language for interacting with the web
 
 _Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/Easel/issues/new) (Please check for an existing one first to avoid duplicates!)_
 
-_Want to contribute? You can find open issues that need attention [here](https://github.com/CragglesG/Easel/issues)._
+_Want to contribute? You can find good first issues [here](https://github.com/CragglesG/Easel/contribute)._
 
 ## Table of Contents
 
@@ -13,6 +13,7 @@ _Want to contribute? You can find open issues that need attention [here](https:/
   - [macOS](#macos)
   - [Windows](#windows)
 - [Command Line Usage](#command-line-usage)
+- [Syntax](#syntax)
 
 ## Installation Guide
 
@@ -106,3 +107,15 @@ WebScript's debug mode will output the AST (Abstract Syntax Tree) and tokens gen
 webscript FILE --dbg
 ```
 
+## Syntax
+WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (It was orignally made using the tutorial, but is constantly being modified and improved.)
+It also shares some similarities with the language it is written in, JavaScript. Below is a table of the current WebScript syntax:
+
+| Operation                 | Syntax                                       | Notes                                                                                                                             |
+|---------------------------|----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Declare/Mutate Variable   | `prepare NAME as VALUE`                      | This syntax is also used to modify object attributes, for example:  `prepare obj.attr as 'attr'`                                  |
+| Define Struct             | `type NAME has { PROPERTIES }`               | N/A                                                                                                                               |
+| Create Instance of Struct | `prep NAME(PROPERTIES)`                      | `NAME` should be the name of the struct. References to the name of the struct after instance creation will refer to the instance. |
+| Define Function           | `func NAME needs (PARAMS) { BODY }`          | Whitespace is always ignored, so it is not necessary here, but it is recommended for readability.                                 |
+| Return from Function      | `finished VALUE`                             | N/A                                                                                                                               |
+| For Loop                  | `loop COUNTER through (START, END) { BODY }` | `COUNTER` should usually, by convention, be  `i`.                                                                                 |
