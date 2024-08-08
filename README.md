@@ -52,11 +52,45 @@ Done! You can now use the command `webscript` to run WebScript.
 
 ### macOS
 
-_Support for macOS is coming soon_
+This process is much the same as the process for Linux, with the only difference being slightly different download links. However, this process not yet been tested on macOS and may not function as intended.
+
+**WebScript requires that your default shell is set to zsh. If you are running macOS Catalina 10.15 or higher, and you have not changed your default shell, you are already using zsh.**
+
+
+To quick install WebScript to `~/.webscript`, run the following command:
+
+```
+wget https://github.com/CragglesG/Easel/blob/main/macos/install.sh && chmod +x install.sh && ./install.sh
+```
+
+After this command has executed, you can run WebScript using the command `webscript`.
+
+---
+
+If you would rather inspect `install.sh` first to see what's happening under the hood, you can do so by running the above commands separately. This first command downloads `install.sh` from this repository:
+
+```
+wget https://github.com/CragglesG/Easel/blob/main/macos/install.sh
+```
+
+If you would like to inspect `install.sh`, you can do this now. To make this file executable so that we can run it, we need to change its permissions:
+
+```
+chmod +x install.sh
+```
+
+Lastly, we'll run the file, which will automatically install WebScript into the `.webscript` folder inside your home directory:
+
+```
+./install.sh
+```
+
+Done! You can now use the command `webscript` to run WebScript.
+
 
 ### Windows
 
-_Support for Windows is coming soon_
+_Support for Windows is coming soon._
 
 ## Command Line Usage
 Once installed, you can use WebScript with the `webscript` command. To enter REPL, simply run `webscript` alone:
