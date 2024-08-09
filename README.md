@@ -18,7 +18,7 @@ _Want to contribute? You can find good first issues [here](https://github.com/Cr
 - [Syntax](#syntax)
   - [Standard Library](#standard-library)
     - [request](#request)
-- [Structure](#structure)
+- [Implementation Details](#implementation-details)
 
 ## Installation Guide
 
@@ -207,12 +207,23 @@ Notice how we didn't need to use any custom request headers, so we didn't pass i
 google.get([YOUR_HEADERS_HERE])
 ```
 
-## Structure
-This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout the code to help you to understand it.
+## Implementation Details
+This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it.
 
 WebScript recognises the following tokens:
 
 ( ) { } [ ] . , : | ! && == !=== > >= < <= + - * \ `EOF` `Keyword` `Identifier` `String` `Number` 
+
+WebScript recognises the following as keywords:
+
+prepare, as, type, prep, has, func, needs, return, loop, through, while, if, elif, else
+
+WebScript's AST contains the following nodes:
+
+Literal, Array, Var, Binary, Func, Return, For, While, Conditional, Set, Struct, Instance, Call, Get, Unary
+
+
+
 
 <br><br><br><br><br><br><br>
 
