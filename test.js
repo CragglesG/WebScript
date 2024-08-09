@@ -1,3 +1,5 @@
+// Quick test to confirm any fatal errors.
+
 import { exec } from 'child_process'
 
 let child

@@ -1,3 +1,5 @@
+// All the Abstract Syntax Tree nodes, used in the parser and interpreter
+
 export class Literal {
     constructor(value) {
         this.type = 'Literal'

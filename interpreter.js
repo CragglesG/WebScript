@@ -1,6 +1,8 @@
 import Ast from './ast.js'
 import { WebScriptError } from './stdlib.js'
 
+// Array prototype methods: add & get
+
 Array.prototype.add = function (args) {
     this.push(...args)
 }
@@ -9,6 +11,7 @@ Array.prototype.get = function ([index]) {
     return this[index]
 }
 
+// Use an exception to exit functions (not shown to user)
 export class ReturnException extends Error {
     constructor(value) {
         super()
@@ -21,24 +24,29 @@ export class Interpreter {
         throw new WebScriptError(`Runtime error: ${msg}`)
     }
 
+    // Check if a node is in scope
     inScope(scope, name) {
         return Object.keys(scope).includes(name)
     }
 
+    // Evaluate expressions
     evaluate(value, scope) {
         if (typeof value == "undefined") {
             throw new WebScriptError(`Runtime error: value is not defined`)
         }
         switch (value.constructor) {
+            // Get a variable
             case Ast.Var: {
                 if (!this.inScope(scope, value.name))
                     this.error(`${value.name} is not defined in current scope`)
                 return scope[value.name]
             }
+            // Apply NOT
             case Ast.Unary: {
                 const operations = { '!': apply => !apply }
                 return operations[value.operator](this.evaluate(value.apply, scope))
             }
+            // Perform binary operation
             case Ast.Binary: {
                 const operations = {
                     '<': (left, right) => left < right,
@@ -59,12 +67,15 @@ export class Interpreter {
                     this.evaluate(value.right, scope)
                 )
             }
+            // Set a literal (Number, boolean, string)
             case Ast.Literal: {
                 return value.value
             }
+            // Create an array
             case Ast.Array: {
                 return value.value.map(expr => this.evaluate(expr, scope))
             }
+            // Create an instance of a struct
             case Ast.Instance: {
                 if (!this.inScope(scope, value.name))
                     this.error(`${value.name} is not defined in current scope`)
@@ -75,6 +86,7 @@ export class Interpreter {
                     members[member] = this.evaluate(memberValue, scope)
                 return constructor(members) 
             }
+            // Evaluate a call
             case Ast.Call: {
                 const caller = this.evaluate(value.caller, scope)
                 if (!caller) this.error('Caller did not resolve to a defined value')
@@ -82,6 +94,7 @@ export class Interpreter {
                 for (let arg of value.args) args.push(this.evaluate(arg, scope))
                 return caller(args)
             }
+            // Evaluate a get call
             case Ast.Get:
                 const caller = this.evaluate(value.caller, scope)
 
@@ -100,15 +113,18 @@ export class Interpreter {
 
     execute(node, scope) {
         switch(node.constructor) {
+            // Evaluate a variable
             case Ast.Var:
                 scope[node.name] = this.evaluate(node.value, scope)
                 return scope
+            // Set a variable
             case Ast.Set: {
                 if (!this.inScope(scope, node.caller))
                     this.error(`${node.caller} is not defined in current scope`)
                 scope[node.caller][node.property] = this.evaluate(node.value, scope)
                 return scope
             }
+            // Define a struct
             case Ast.Struct:
                 scope[node.name] = members => {
                     let instance = {}
@@ -120,6 +136,7 @@ export class Interpreter {
                     return instance
                 }
                 return scope
+            // Create a function
             case Ast.Func: {
                 const func = args => {
                     let localScope = { ...scope }
@@ -136,12 +153,15 @@ export class Interpreter {
                 scope[node.name] = func
                 return scope
             }
+            // Return from a function using ReturnException
             case Ast.Return:
                 throw new ReturnException(this.evaluate(node.value, scope))
+            // Execute a while loop
             case Ast.While: {
                 while (this.execute(node.condition, scope)) this.run(node.body, scope)
                 break
             }
+            // Execute a for loop
             case Ast.For: {
                 let localScope = { ...scope, [node.id]: this.evaluate(node.range[0]) }
                 while (localScope[node.id] < this.evaluate(node.range[1], scope)) {
@@ -150,6 +170,7 @@ export class Interpreter {
                 }
                 break
             }
+            // Evaluate and execute a conditional
             case Ast.Conditional: {
                 if (this.evaluate(node.condition, scope)) this.run(node.body, scope)
                 else
@@ -163,6 +184,7 @@ export class Interpreter {
         return scope
     }
 
+    // Evaluate and execute all nodess
     run(ast, scope) {
         for (const node of ast) scope = this.execute(node, scope)
         return scope

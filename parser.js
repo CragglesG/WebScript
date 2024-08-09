@@ -2,6 +2,7 @@ import { WebScriptError } from './stdlib.js'
 import { TOKENS } from './lexer.js'
 import Ast from './ast.js'
 
+// Function to check if a token is an operator
 const isOp = type =>
     [   
         TOKENS.Or,
@@ -18,6 +19,7 @@ const isOp = type =>
         TOKENS.Slash
     ].includes(type)
 
+// Define the order of operations (PEDMAS, BODMAS, BIMDAS, etc.)
 const opOrder = {
     '<': 0,
     '<=': 0,
@@ -33,6 +35,7 @@ const opOrder = {
     '/': 2
 }
 
+// Contains all the attributes and methods in the parser
 export class Parser {
     constructor(tokens) {
         this.tokens = tokens
@@ -46,22 +49,26 @@ export class Parser {
         )
     }
 
+    // Return the next token unless it's EOF
     peek() {
         if (this.current >= this.tokens.length) return null
         return this.tokens[this.current]
     }
 
+    // Return the type of the next token
     peekType() {
         if (this.current >= this.tokens.length) return null
         return this.tokens[this.current].type
     }
 
+    // Return the next token if it's a keyword
     peekKeyword(keyword) {
         if (this.peekType() !== TOKENS.Keyword || this.peek().value !== keyword)
             return null
         return this.peek()
     }
 
+    // Return the next token if it's the specified type, otherwise throw an error
     eat(type) {
         if (this.peekType() === type) return this.tokens[this.current++]
         this.error(
@@ -70,6 +77,7 @@ export class Parser {
         )
     }
 
+    // Return the next token if it's the specified keyword, otherwise throw an error
     eatKeyword(keyword) {
         if (this.peekType() !== TOKENS.Keyword)
             this.error(
@@ -84,6 +92,7 @@ export class Parser {
         return this.eat(TOKENS.Keyword)
     }
 
+    // Return a list of expressions
     exprList() {
         let exprs = []
         exprs.push(this.expr())
@@ -94,6 +103,7 @@ export class Parser {
         return exprs
     }
 
+    // Return a list of identifiers
     identifierList() {
         let identifiers = []
         identifiers.push(this.eat(TOKENS.Identifier).value)
@@ -104,6 +114,7 @@ export class Parser {
         return identifiers
     }
 
+    // Handle instances, strings, numbers, booleans, arrays, and variables
     simple() {
         let token = this.eat(this.peekType())
         switch (token.type) {
@@ -148,6 +159,7 @@ export class Parser {
         this.error(token, "Expected expression but got " + token)
     }
 
+    // Handle calls (object.func(), object.attr, etc.)
     call() {
         let expr = this.simple()
         while (true) {
@@ -171,6 +183,7 @@ export class Parser {
         return expr
     }
 
+    // Handle NOT
     unary() {
         if (this.peekType() === TOKENS.Not) {
             const op = this.eat(this.peekType()).value
@@ -180,6 +193,7 @@ export class Parser {
         return this.call()
     }
 
+    // Handle binary expressions
     expr() {
         const left = this.unary()
         if (isOp(this.peekType())) {
@@ -196,16 +210,19 @@ export class Parser {
         return left
     }
 
+    // Handle statements: returns, functions, for loops, while loops, structs, conditionals, and variable assignments
     stmt() {
         const returnStmt = () => {
-            this.eatKeyword('finish')
+            this.eatKeyword('return')
             return new Ast.Return(this.expr())
         }
 
+        // Functions
         const funcStmt = () => {
             this.eatKeyword('func')
             const name = this.eat(TOKENS.Identifier).value
 
+            // Parameters
             let params = []
             if (this.peekKeyword('needs')) {
                 this.eatKeyword('needs')
@@ -214,6 +231,7 @@ export class Parser {
                 this.eat(TOKENS.RightParen)
             }
             
+            // Body
             this.eat(TOKENS.LeftBrace)
             let body = []
             while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
@@ -223,10 +241,12 @@ export class Parser {
         }
 
         const forStmt = () => {
+            // Counter (i)
             this.eatKeyword('loop')
             const id = this.eat(TOKENS.Identifier).value
             this.eatKeyword('through')
 
+            // Start and End
             this.eat(TOKENS.LeftParen)
             const range = this.exprList()
             if (range.length !== 2)
@@ -236,6 +256,7 @@ export class Parser {
                 )
             this.eat(TOKENS.RightParen)
 
+            // Body
             this.eat(TOKENS.LeftBrace)
             let body = []
             while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
@@ -247,10 +268,12 @@ export class Parser {
         const whileStmt = () => {
             this.eatKeyword('while')
 
+            // Condition
             this.eat(TOKENS.LeftParen)
             const condition =  this.expr()
             this.eat(TOKENS.RightParen)
 
+            // Body
             this.eat(TOKENS.LeftBrace)
             let body = []
             while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
@@ -262,6 +285,7 @@ export class Parser {
         const conditionalStmt = keyword => {
             this.eatKeyword(keyword)
 
+            // Condition
             let condition = new Ast.Literal(true)
             if (keyword !== 'else') {
                 this.eat(TOKENS.LeftParen)
@@ -269,11 +293,13 @@ export class Parser {
                 this.eat(TOKENS.RightBrace)
             }
 
+            // Body
             this.eat(TOKENS.LeftBrace)
             let body = []
             while (this.peekType() !== TOKENS.RightBrace) body.push(this.stmt())
             this.eat(TOKENS.RightBrace)
 
+            // Elif/Else
             let otherwise = []
             while (this.peekKeyword('elif') || this.peekKeyword('else'))
                 otherwise.push(conditionalStmt(this.peek().value))
@@ -281,6 +307,7 @@ export class Parser {
             return new Ast.Conditional(condition, body, otherwise)
         }
 
+        // Variable assignments
         const assignStmt = () => {
             this.eatKeyword('prepare')
             const name = this.eat(TOKENS.Identifier).value
@@ -306,6 +333,7 @@ export class Parser {
             return new Ast.Struct(name, members)
         }
 
+        // Call one of the above functions depending on the Keyword
         const next = this.peek()
         switch(next.type) {
             case TOKENS.Keyword: {
@@ -332,6 +360,7 @@ export class Parser {
         }
     }
 
+    // Run the reverse chain (statements, expressions, unary operators, calls, and simple expressions) in a loop over all tokens
     parse() {
         while (this.peekType() !== TOKENS.EOF) this.ast.push(this.stmt())
         return this.ast

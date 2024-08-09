@@ -47,7 +47,6 @@ const writeFile = (location, data) =>
             parser.parse()
         } catch (err) {
             console.log(err)
-            process.exit(1)
         } finally {
             if (debug) await writeFile('ast.json', JSON.stringify(parser.ast, null, 2))
         }
@@ -57,7 +56,6 @@ const writeFile = (location, data) =>
             interpreter.run(parser.ast, stdlib)
         } catch (err) {
             console.log(err)
-            process.exit(1)
         }
     } else {
         const interpreter =  new Interpreter()

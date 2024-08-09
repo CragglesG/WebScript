@@ -1,3 +1,5 @@
+// The Standard Library, provides all useful pre-defined functions and methods in WebScript
+
 import { XMLHttpRequest } from "xmlhttprequest"
 
 export class WebScriptError extends Error {
@@ -11,11 +13,13 @@ export class WebScriptError extends Error {
     }
 }
 
+// XMLHttpRequest Request Object
 export class Request {
     constructor(url) {
         this.url = url
     }
 
+    // Send a GET request
     get(headers=[]) {
         const HTTPRequest = new XMLHttpRequest()
         HTTPRequest.open("GET", this.url, false)
@@ -26,6 +30,7 @@ export class Request {
         return HTTPRequest
     }
 
+    // Send a POST request
     post(body=null, headers=[]) {
         // May be unstable - has not yet been tested
         const HTTPRequest = new XMLHttpRequest()
@@ -37,6 +42,7 @@ export class Request {
         HTTPRequest.send(body)
     }
 
+    // Send a PUT request
     put(body=null, headers=[]) {
         // May be unstable - has not yet been tested
         const HTTPRequest = new XMLHttpRequest()
@@ -47,6 +53,7 @@ export class Request {
         HTTPRequest.send(body)
     }
 
+    // Send a DELETE request
     delete(body=null, headers=[]) {
         // May be unstable - has not yet been tested
         const HTTPRequest = new XMLHttpRequest()
@@ -58,12 +65,17 @@ export class Request {
     }
 }
 
+// Export the standard library
 export default {
+    // request makes a new request object
     request: new Request(),
+    // display() prints to the console
     display: args => console.log(...args),
+    // random() generates a random number within a min and max
     random: ([min, max]) => {
         if (min >= 0 && max <= 1) return Math.random()
         return Math.random() * (max - min + 1) + min
     },
+    // round() rounds a float/double to the nearest whole number
     round: number => Math.round(number)
 }
