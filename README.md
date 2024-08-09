@@ -2,6 +2,8 @@
 
 WebScript is an in-development programming language for interacting with the web.
 
+_Hack Club Arcade Reviewers, see [here](#arcade-reviewers)_
+
 _Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/Easel/issues/new) (Please check for an existing one first to avoid duplicates!)_
 
 _Want to contribute? You can find good first issues [here](https://github.com/CragglesG/Easel/contribute)._
@@ -204,3 +206,9 @@ Notice how we didn't need to use any custom request headers, so we didn't pass i
 google.get([YOUR_HEADERS_HERE])
 ```
 
+<br><br><br><br><br><br><br>
+
+#### Arcade Reviewers
+This project started off with the Easel tutorial (hence the repo name), before I grew it into it's own language. The majority of the lexer, parser, and interpreter were made using the Easel tutorial, with some differences in implementation, formatting, comments, and the language's syntax. I have since then grown the Standard Library to make WebScript about the web, added a test file, added shell and powershell files to run WebScript, added quick-install shell files, and created all of the above documentation. I started this project with almost no knowledge of JavaScript or how to make a programming language, so it has taken me a while longer to implement this than it probably should have. I used no AI in the process.
+
+**Thanks for reviewing my project!**
