@@ -17,7 +17,10 @@ display(array)
 type S has { x,y,z }
 prep S( x:1, y:2, z:3 )
 
-prepare g as request
-prepare g.url as 'https://www.google.ie'
+prepare g as request('https://www.google.ie')
 
-display(g.get())
+display(g.get().UNSENT)
+
+prepare btc as crypto
+
+display(btc.getPrice("bitcoin"))
