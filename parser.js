@@ -290,7 +290,7 @@ export class Parser {
             if (keyword !== 'else') {
                 this.eat(TOKENS.LeftParen)
                 condition = this.expr()
-                this.eat(TOKENS.RightBrace)
+                this.eat(TOKENS.RightParen)
             }
 
             // Body
