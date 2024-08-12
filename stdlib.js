@@ -87,8 +87,12 @@ export class BlockchairAPI {
     getPrice(args=[]) {
         // Get price of crypto in USD
         let convertTo = ""
-        let request = new Request(`https://api.blockchair.com/${args[0]}/stats`)
-        console.log(request.url)
+        let request
+        if (this.key) {
+            request = new Request(`https://api.blockchair.com/${args[0]}/stats?key=${this.key}`)
+        } else {
+            request = new Request(`https://api.blockchair.com/${args[0]}/stats`)
+        }
         let data = request.get()
         if (args.length > 1) convertTo = args[1]
         if (convertTo == "bitcoin" || convertTo == "btc") {
@@ -100,16 +104,25 @@ export class BlockchairAPI {
 
     getStats(crypto) {
         // Get crypto stats
-        let request = new Request(`https://api.blockchair.com/${crypto}/stats`)
+        let request
+        if (this.key) {
+            request = new Request(`https://api.blockchair.com/${crypto}/stats?key=${this.key}`)
+        } else {
+            request = new Request(`https://api.blockchair.com/${crypto}/stats`)
+        }
         data = request.get()
         return JSON.parse(data.responseText).data
     }
 
     getOther(url) {
-        // Get crypto stats
+        // Get JSON data
         let request = new Request(url)
         data = request.get()
         return JSON.parse(data.responseText).data
+    }
+
+    setAPIKey(key) {
+        this.key = key
     }
 }
 

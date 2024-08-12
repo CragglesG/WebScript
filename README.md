@@ -209,7 +209,8 @@ The `crypto` object allows you to query the Blockchair API directly from WebScri
 | `crypto`                                             | `prepare NAME as crypto`             | Prepares `NAME` as a `BlockchairAPI` object                    |
 | `crypto.getPrice(crypto="bitcoin", convertTo="usd")` | `crypto.getPrice(CRYPTO, CONVERTTO)` | Returns the price of `CRYPTO` in `CONVERTTO`. `CONVERTTO` can be `"bitcoin"`, `"btc"`, or `"usd"`             |
 | `crypto.getStats(crypto="bitcoin")`                 | `crypto.getStats(CRYPTO)`        | Returns all data on `CRYPTO` in JSON  |
-| `crypto.getOther(url)`                 | `crypto.getOther(URL)`         | Returns JSON data from the specified Blockchair API link, useful for adding an API key |
+| `crypto.getOther(url)`                 | `crypto.getOther(URL)`         | Returns JSON data from the specified Blockchair API link. |
+| `crypto.setAPIKey(key)` | `crypto.setAPIKey(KEY)` | Sets `KEY` as the key to be used in all queries. |
 
 ## Implementation Details
 This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it.
