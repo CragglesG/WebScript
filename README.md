@@ -166,7 +166,7 @@ WebScript's Standard Library provides numerous helpful methods and objects for y
 | `random`  | `random([MIN, MAX])`           | Chooses a random number between `MIN` and `MAX` using `Math.random()`.                         |
 | `round`   | `round(NUMBER)`                | Rounds `NUMBER` to the nearest whole number using `Math.round()`.                              |
 | `request` | `prepare NAME as request(URL)` | `request` is a request object that utilises `XMLHttpRequest`. Use is further documented below. |
-| `crypto`  | `prepare NAME as crypto`       | `crypto` is a BlockchairAPI object. Documentation coming soon.                                 |
+| `crypto`  | `prepare NAME as crypto`       | `crypto` is a BlockchairAPI object. Use is further documented below                                 |
 
 #### `request`
 The `request` object is provided in the Standard Library to allow GET, POST, PUT, and DELETE requests to be easily sent through HTTP. A table of all attributes and methods is provided below:
@@ -201,6 +201,16 @@ Notice how we didn't need to use any custom request headers, so we didn't pass i
 google.get([YOUR_HEADERS_HERE])
 ```
 
+#### `crypto`
+The `crypto` object allows you to query the Blockchair API directly from WebScript (up to 1400 times/day without an API key) to retrieve information from 14 blockchains. A table of all attributes and methods is provided below:
+
+| Method/Attribute                                     | Use                                  | Description                                                    |
+|------------------------------------------------------|--------------------------------------|----------------------------------------------------------------|
+| `crypto`                                             | `prepare NAME as crypto`             | Prepares `NAME` as a `BlockchairAPI` object                    |
+| `crypto.getPrice(crypto="bitcoin", convertTo="usd")` | `crypto.getPrice(CRYPTO, CONVERTTO)` | Returns the price of `CRYPTO` in `CONVERTTO`. `CONVERTTO` can be `"bitcoin"`, `"btc"`, or `"usd"`             |
+| `crypto.getStats(crypto="bitcoin")`                 | `crypto.getStats(CRYPTO)`        | Returns all data on `CRYPTO` in JSON  |
+| `crypto.getOther(url)`                 | `crypto.getOther(URL)`         | Returns JSON data from the specified Blockchair API link, useful for adding an API key |
+
 ## Implementation Details
 This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it.
 
@@ -222,6 +232,6 @@ Literal, Array, Var, Binary, Func, Return, For, While, Conditional, Set, Struct,
 <br><br><br><br><br><br><br>
 
 #### Arcade Reviewers
-This project started off with the Easel tutorial (hence the repo name), before I grew it into it's own language. The majority of the lexer, parser, and interpreter were made using the Easel tutorial, with some differences in implementation, formatting, comments, and the language's syntax. I have since then grown the Standard Library to make WebScript about the web, added a test file, added shell and powershell files to run WebScript, added quick-install shell files, and created all of the above documentation. I started this project with almost no knowledge of JavaScript or how to make a programming language, so it has taken me a while longer to implement this than it probably should have. I used no AI in the process.
+This project started off with the Easel tutorial, before I grew it into it's own language. The majority of the lexer, parser, and interpreter were made using the Easel tutorial, with some differences in implementation, formatting, comments, and the language's syntax. I have since then grown the Standard Library to make WebScript about the web, added a test file, added shell and powershell files to run WebScript, added quick-install shell files, and created all of the above documentation. I started this project with almost no knowledge of JavaScript or how to make a programming language, so it has taken me a while longer to implement this than it probably should have. I used no AI in the process.
 
 **Thanks for reviewing my project!**
