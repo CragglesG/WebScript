@@ -8,7 +8,7 @@ _Found a bug? Want a new feature? [Create an issue!](https://github.com/Craggles
 
 _Want to contribute? You can find good first issues [here](https://github.com/CragglesG/WebScript/contribute)._
 
-![Demo](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy)
+[![asciicast](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy.svg)](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy)
 
 ## Table of Contents
 
