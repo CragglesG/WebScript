@@ -2,7 +2,7 @@
 
 WebScript is an in-development programming language for interacting with the web.
 
-_Hack Club Arcade Reviewers, see [here](#arcade-reviewers)_
+_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_
 
 _Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/WebScript/issues/new) (Please check for an existing one first to avoid duplicates!)_
 
