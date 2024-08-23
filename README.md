@@ -8,6 +8,8 @@ _Found a bug? Want a new feature? [Create an issue!](https://github.com/Craggles
 
 _Want to contribute? You can find good first issues [here](https://github.com/CragglesG/Easel/contribute)._
 
+![Demo](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy)
+
 ## Table of Contents
 
 - [Installation Guide](#installation-guide)
@@ -213,7 +215,7 @@ The `crypto` object allows you to query the Blockchair API directly from WebScri
 | `crypto.setAPIKey(key)` | `crypto.setAPIKey(KEY)` | Sets `KEY` as the key to be used in all queries. |
 
 ## Implementation Details
-This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it.
+This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it if you do decide to contribute.
 
 WebScript recognises the following tokens:
 
