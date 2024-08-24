@@ -31,7 +31,7 @@ While the installation process is quick and straightfoward, it differs slightly 
 To quick install WebScript to `~/.webscript`, run the following command:
 
 ```
-wget https://github.com/CragglesG/Easel/blob/main/linux/install.sh && chmod +x install.sh && ./install.sh
+wget https://github.com/CragglesG/WebScript/blob/main/linux/install.sh && chmod +x install.sh && ./install.sh
 ```
 
 After this command has executed, you can run WebScript using the command `webscript`.
@@ -41,7 +41,7 @@ After this command has executed, you can run WebScript using the command `webscr
 If you would rather inspect `install.sh` first to see what's happening under the hood, you can do so by running the above commands separately. This first command downloads `install.sh` from this repository:
 
 ```
-wget https://github.com/CragglesG/Easel/blob/main/linux/install.sh
+wget https://github.com/CragglesG/WebScript/blob/main/linux/install.sh
 ```
 
 If you would like to inspect `install.sh`, you can do this now. To make this file executable so that we can run it, we need to change its permissions:
@@ -70,7 +70,7 @@ This process is much the same as the process for Linux, with the only difference
 To quick install WebScript to `~/.webscript`, run the following command:
 
 ```
-wget https://github.com/CragglesG/Easel/blob/main/macos/install.sh && chmod +x install.sh && ./install.sh
+wget https://github.com/CragglesG/WebScript/blob/main/macos/install.sh && chmod +x install.sh && ./install.sh
 ```
 
 After this command has executed, you can run WebScript using the command `webscript`.
@@ -80,7 +80,7 @@ After this command has executed, you can run WebScript using the command `webscr
 If you would rather inspect `install.sh` first to see what's happening under the hood, you can do so by running the above commands separately. This first command downloads `install.sh` from this repository:
 
 ```
-wget https://github.com/CragglesG/Easel/blob/main/macos/install.sh
+wget https://github.com/CragglesG/WebScript/blob/main/macos/install.sh
 ```
 
 If you would like to inspect `install.sh`, you can do this now. To make this file executable so that we can run it, we need to change its permissions:
@@ -112,7 +112,7 @@ To install WebScript run the following in PowerShell (Do not run as administrato
 
 ```
 New-Item -ItemType Directory -Path "$env:USERPROFILE/.webscript"
-git clone "https://github.com/CragglesG/Easel/" "$env:USERPROFILE/.webscript"
+git clone "https://github.com/CragglesG/WebScript/" "$env:USERPROFILE/.webscript"
 [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE/.webscript/windows/", "User")
 ```
 
