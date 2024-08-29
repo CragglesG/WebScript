@@ -2,7 +2,7 @@
 
 WebScript is an in-development programming language for interacting with the web.
 
-_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_
+<!--_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_ !-->
 
 _Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/WebScript/issues/new) (Please check for an existing one first to avoid duplicates!)_
 
@@ -66,7 +66,6 @@ This process is much the same as the process for Linux, with the only difference
 
 **WebScript requires that your default shell is set to zsh. If you are running macOS Catalina 10.15 or higher, and you have not changed your default shell, you are already using zsh.**
 
-
 To quick install WebScript to `~/.webscript`, run the following command:
 
 ```
@@ -97,7 +96,6 @@ Lastly, we'll run the file, which will automatically install WebScript into the 
 
 Done! You can now use the command `webscript` to run WebScript.
 
-
 ### Windows
 
 _WARNING: This has not yet been tested and may not work as intended._
@@ -119,31 +117,38 @@ git clone "https://github.com/CragglesG/WebScript/" "$env:USERPROFILE/.webscript
 Done! You can now use the command `webscript` to run WebScript.
 
 ## Command Line Usage
+
 Once installed, you can use WebScript with the `webscript` command. To enter REPL, simply run `webscript` alone:
+
 ```
 webscript
 ```
+
 To run a WebScript file, run the following, replacing `FILE` with the desired filename:
+
 ```
 webscript FILE
 ```
+
 WebScript's debug mode will output the AST (Abstract Syntax Tree) and tokens generated into the files `ast.json` and `tokens.json`, respectively. This can be useful for debugging while contributing. To run a file in debug mode, add the flag `--dbg`:
+
 ```
 webscript FILE --dbg
 ```
 
 ## Syntax
+
 WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but is constantly being modified and improved.)
 It also shares some similarities with the language it is written in, JavaScript. Below is a table of the current WebScript syntax:
 
 | Operation                 | Syntax                                                             | Notes                                                                                                                 |
-|---------------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| Declare/Mutate Variable   | `prepare NAME as VALUE`                                            | This syntax is also used to modify object attributes, for example:  `prepare obj.attr as 'attr'`                      |
+| ------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Declare/Mutate Variable   | `prepare NAME as VALUE`                                            | This syntax is also used to modify object attributes, for example: `prepare obj.attr as 'attr'`                       |
 | Define Struct             | `type NAME has { PROPERTIES }`                                     | -                                                                                                                     |
 | Create Instance of Struct | `prep NAME(PROPERTIES)`                                            | `NAME` should be the name of the struct. References to the struct after instance creation will refer to the instance. |
 | Define Function           | `func NAME needs (PARAMS) { BODY }`                                | Whitespace is always ignored, but it is recommended for readability.                                                  |
-| Return from Function      | `return VALUE`                                                   | -                                                                                                                     |
-| Loop through Range        | `loop COUNTER through (START, END) { BODY }`                       | `COUNTER` should usually, by convention, be  `i`.                                                                     |
+| Return from Function      | `return VALUE`                                                     | -                                                                                                                     |
+| Loop through Range        | `loop COUNTER through (START, END) { BODY }`                       | `COUNTER` should usually, by convention, be `i`.                                                                      |
 | Loop While True           | `while (CONDITION) { BODY }`                                       | -                                                                                                                     |
 | If/Else-if/Else Statement | ` if (CONDITION) { BODY } elif (CONDITION) { BODY } else { BODY }` | -                                                                                                                     |
 | Exit REPL                 | `exit()`                                                           | Only available in REPL mode.                                                                                          |
@@ -160,27 +165,28 @@ It also shares some similarities with the language it is written in, JavaScript.
 | String                    | `''` or `""`                                                       | Strings should be ended with the same type of quotation mark they begun with.                                         |
 
 ### Standard Library
+
 WebScript's Standard Library provides numerous helpful methods and objects for you to use. Below is a table of all included methods and objects:
 
 | Name      | Use                            | Description                                                                                    |
-|-----------|--------------------------------|------------------------------------------------------------------------------------------------|
+| --------- | ------------------------------ | ---------------------------------------------------------------------------------------------- |
 | `display` | `display(ARGS)`                | Prints `ARGS` to the console using `console.log()`. Accepts multiple arguments.                |
 | `random`  | `random([MIN, MAX])`           | Chooses a random number between `MIN` and `MAX` using `Math.random()`.                         |
 | `round`   | `round(NUMBER)`                | Rounds `NUMBER` to the nearest whole number using `Math.round()`.                              |
 | `request` | `prepare NAME as request(URL)` | `request` is a request object that utilises `XMLHttpRequest`. Use is further documented below. |
-| `crypto`  | `prepare NAME as crypto`       | `crypto` is a BlockchairAPI object. Use is further documented below                                 |
+| `crypto`  | `prepare NAME as crypto`       | `crypto` is a BlockchairAPI object. Use is further documented below                            |
 
 #### `request`
+
 The `request` object is provided in the Standard Library to allow GET, POST, PUT, and DELETE requests to be easily sent through HTTP. A table of all attributes and methods is provided below:
 
 | Method/Attribute                        | Use                             | Description                                                    |
-|-----------------------------------------|---------------------------------|----------------------------------------------------------------|
+| --------------------------------------- | ------------------------------- | -------------------------------------------------------------- |
 | `request`                               | `prepare NAME as request(URL)`  | Prepares `NAME` as a `request` object with `URL` as `this.url` |
 | `request.get(headers=[])`               | `request.get(HEADERS)`          | Sends a GET request with `HEADERS` to `this.url`               |
 | `request.post(body=null, headers=[]`    | `request.post(BODY, HEADERS)`   | Sends a POST request with `BODY` and `HEADERS` to `this.url`   |
 | `request.put(body=null, headers=[])`    | `request.put(BODY, HEADERS)`    | Sends a POST request with `BODY` and `HEADERS` to `this.url`   |
 | `request.delete(body=null, headers=[])` | `request.delete(BODY, HEADERS)` | Sends a DELETE request with `BODY` and `HEADERS` to `this.url` |
-
 
 If you find the above table unhelpful or hard to understand, here's a step-by-step example of how to use `request` to make a GET request to Google:
 
@@ -204,22 +210,24 @@ google.get([YOUR_HEADERS_HERE])
 ```
 
 #### `crypto`
+
 The `crypto` object allows you to query the Blockchair API directly from WebScript (up to 1400 times/day without an API key) to retrieve information from 14 blockchains. A table of all attributes and methods is provided below:
 
-| Method/Attribute                                     | Use                                  | Description                                                    |
-|------------------------------------------------------|--------------------------------------|----------------------------------------------------------------|
-| `crypto`                                             | `prepare NAME as crypto`             | Prepares `NAME` as a `BlockchairAPI` object                    |
-| `crypto.getPrice(crypto="bitcoin", convertTo="usd")` | `crypto.getPrice(CRYPTO, CONVERTTO)` | Returns the price of `CRYPTO` in `CONVERTTO`. `CONVERTTO` can be `"bitcoin"`, `"btc"`, or `"usd"`             |
-| `crypto.getStats(crypto="bitcoin")`                 | `crypto.getStats(CRYPTO)`        | Returns all data on `CRYPTO` in JSON  |
-| `crypto.getOther(url)`                 | `crypto.getOther(URL)`         | Returns JSON data from the specified Blockchair API link. |
-| `crypto.setAPIKey(key)` | `crypto.setAPIKey(KEY)` | Sets `KEY` as the key to be used in all queries. |
+| Method/Attribute                                     | Use                                  | Description                                                                                       |
+| ---------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `crypto`                                             | `prepare NAME as crypto`             | Prepares `NAME` as a `BlockchairAPI` object                                                       |
+| `crypto.getPrice(crypto="bitcoin", convertTo="usd")` | `crypto.getPrice(CRYPTO, CONVERTTO)` | Returns the price of `CRYPTO` in `CONVERTTO`. `CONVERTTO` can be `"bitcoin"`, `"btc"`, or `"usd"` |
+| `crypto.getStats(crypto="bitcoin")`                  | `crypto.getStats(CRYPTO)`            | Returns all data on `CRYPTO` in JSON                                                              |
+| `crypto.getOther(url)`                               | `crypto.getOther(URL)`               | Returns JSON data from the specified Blockchair API link.                                         |
+| `crypto.setAPIKey(key)`                              | `crypto.setAPIKey(KEY)`              | Sets `KEY` as the key to be used in all queries.                                                  |
 
 ## Implementation Details
+
 This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it if you do decide to contribute.
 
 WebScript recognises the following tokens:
 
-( ) { } [ ] . , : | ! && == !=== > >= < <= + - * \ `EOF` `Keyword` `Identifier` `String` `Number` 
+( ) { } [ ] . , : | ! && == !=== > >= < <= + - \* \ `EOF` `Keyword` `Identifier` `String` `Number`
 
 WebScript recognises the following as keywords:
 
@@ -229,14 +237,11 @@ WebScript's AST contains the following nodes:
 
 Literal, Array, Var, Binary, Func, Return, For, While, Conditional, Set, Struct, Instance, Call, Get, Unary
 
-
-
-
-<br><br><br><br><br><br><br>
+<!--<br><br><br><br><br><br><br>
 
 #### Arcade Reviewers
 _Previous scrapbook post: This project started off with the Easel tutorial, before I grew it into it's own language. The majority of the lexer, parser, and interpreter were made using the Easel tutorial, with some differences in implementation, formatting, comments, and the language's syntax. I have since then grown the Standard Library to make WebScript about the web, added a test file, added shell and powershell files to run WebScript, added quick-install shell files, and created all of the above documentation. I started this project with almost no knowledge of JavaScript or how to make a programming language, so it has taken me a while longer to implement this than it probably should have. I used no AI in the process._
 
 _Current scrapbook post:_ All of the changes made in the latest version of WebScript (v0.2.0) were completely original. I did not use any AI.
 
-**Thanks for reviewing my project!**
+**Thanks for reviewing my project!**!-->
