@@ -2,7 +2,7 @@
 
 WebScript is an in-development programming language for interacting with the web.
 
-_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_
+<!--_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_ !-->
 
 _Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/WebScript/issues/new) (Please check for an existing one first to avoid duplicates!)_
 
@@ -232,11 +232,11 @@ Literal, Array, Var, Binary, Func, Return, For, While, Conditional, Set, Struct,
 
 
 
-<br><br><br><br><br><br><br>
+<!--<br><br><br><br><br><br><br>
 
 #### Arcade Reviewers
 _Previous scrapbook post: This project started off with the Easel tutorial, before I grew it into it's own language. The majority of the lexer, parser, and interpreter were made using the Easel tutorial, with some differences in implementation, formatting, comments, and the language's syntax. I have since then grown the Standard Library to make WebScript about the web, added a test file, added shell and powershell files to run WebScript, added quick-install shell files, and created all of the above documentation. I started this project with almost no knowledge of JavaScript or how to make a programming language, so it has taken me a while longer to implement this than it probably should have. I used no AI in the process._
 
 _Current scrapbook post:_ All of the changes made in the latest version of WebScript (v0.2.0) were completely original. I did not use any AI.
 
-**Thanks for reviewing my project!**
+**Thanks for reviewing my project!**!-->
