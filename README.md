@@ -20,6 +20,7 @@ _Want to contribute? You can find good first issues [here](https://github.com/Cr
 - [Syntax](#syntax)
   - [Standard Library](#standard-library)
     - [request](#request)
+    - [crypto](#crypto)
 - [Implementation Details](#implementation-details)
 
 ## Installation Guide
