@@ -1,125 +1,12 @@
 # WebScript
 
-WebScript is an in-development programming language for interacting with the web.
+Welcome to the WebScript demo! To get started, run `./webscript` in the terminal below (at the bottom of the screen) to enter REPL.
 
-<!--_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_ !-->
-
-_Found a bug? Want a new feature? [Create an issue!](https://github.com/CragglesG/WebScript/issues/new) (Please check for an existing one first to avoid duplicates!)_
-
-_Want to contribute? You can find good first issues [here](https://github.com/CragglesG/WebScript/contribute)._
-
-[![asciicast](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy.svg)](https://asciinema.org/a/53pbwoqLIowySMPDPQDq7oeiy)
-
-## Table of Contents
-
-- [Installation Guide](#installation-guide)
-  - [Linux](#linux)
-  - [macOS](#macos)
-  - [Windows](#windows)
-- [Command Line Usage](#command-line-usage)
-- [Syntax](#syntax)
-  - [Standard Library](#standard-library)
-    - [request](#request)
-    - [crypto](#crypto)
-- [Implementation Details](#implementation-details)
-
-## Installation Guide
-
-While the installation process is quick and straightfoward, it differs slightly by OS. Please skip to the installation guide for the OS you are using.
-
-### Linux
-
-To quick install WebScript to `~/.webscript`, run the following command:
-
-```
-wget https://github.com/CragglesG/WebScript/blob/main/linux/install.sh && chmod +x install.sh && ./install.sh
-```
-
-After this command has executed, you can run WebScript using the command `webscript`.
-
----
-
-If you would rather inspect `install.sh` first to see what's happening under the hood, you can do so by running the above commands separately. This first command downloads `install.sh` from this repository:
-
-```
-wget https://github.com/CragglesG/WebScript/blob/main/linux/install.sh
-```
-
-If you would like to inspect `install.sh`, you can do this now. To make this file executable so that we can run it, we need to change its permissions:
-
-```
-chmod +x install.sh
-```
-
-Lastly, we'll run the file, which will automatically install WebScript into the `.webscript` folder inside your home directory:
-
-```
-./install.sh
-```
-
-Done! You can now use the command `webscript` to run WebScript.
-
-### macOS
-
-_WARNING: This has not yet been tested and may not work as intended._
-
-This process is much the same as the process for Linux, with the only difference being slightly different download links.
-
-**WebScript requires that your default shell is set to zsh. If you are running macOS Catalina 10.15 or higher, and you have not changed your default shell, you are already using zsh.**
-
-To quick install WebScript to `~/.webscript`, run the following command:
-
-```
-wget https://github.com/CragglesG/WebScript/blob/main/macos/install.sh && chmod +x install.sh && ./install.sh
-```
-
-After this command has executed, you can run WebScript using the command `webscript`.
-
----
-
-If you would rather inspect `install.sh` first to see what's happening under the hood, you can do so by running the above commands separately. This first command downloads `install.sh` from this repository:
-
-```
-wget https://github.com/CragglesG/WebScript/blob/main/macos/install.sh
-```
-
-If you would like to inspect `install.sh`, you can do this now. To make this file executable so that we can run it, we need to change its permissions:
-
-```
-chmod +x install.sh
-```
-
-Lastly, we'll run the file, which will automatically install WebScript into the `.webscript` folder inside your home directory:
-
-```
-./install.sh
-```
-
-Done! You can now use the command `webscript` to run WebScript.
-
-### Windows
-
-_WARNING: This has not yet been tested and may not work as intended._
-
-Before installing WebScript, you must enable execution of local scripts. You can do this using the following command in PowerShell (Run as administrator):
-
-```
-Set-ExecutionPolicy RemoteSigned
-```
-
-To install WebScript run the following in PowerShell (Do not run as administrator):
-
-```
-New-Item -ItemType Directory -Path "$env:USERPROFILE/.webscript"
-git clone "https://github.com/CragglesG/WebScript/" "$env:USERPROFILE/.webscript"
-[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE/.webscript/windows/", "User")
-```
-
-Done! You can now use the command `webscript` to run WebScript.
+_Note: A large portion of this README has been removed/modified to make this demo somewhat easier to use._
 
 ## Command Line Usage
 
-Once installed, you can use WebScript with the `webscript` command. To enter REPL, simply run `webscript` alone:
+You can use WebScript's REPL functionality with the `webscript` command. To enter REPL, simply run `webscript` alone:
 
 ```
 webscript
@@ -131,15 +18,9 @@ To run a WebScript file, run the following, replacing `FILE` with the desired fi
 webscript FILE
 ```
 
-WebScript's debug mode will output the AST (Abstract Syntax Tree) and tokens generated into the files `ast.json` and `tokens.json`, respectively. This can be useful for debugging while contributing. To run a file in debug mode, add the flag `--dbg`:
-
-```
-webscript FILE --dbg
-```
-
 ## Syntax
 
-WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but is constantly being modified and improved.)
+WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but it has been modified a lot since.)
 It also shares some similarities with the language it is written in, JavaScript. Below is a table of the current WebScript syntax:
 
 | Operation                 | Syntax                                                             | Notes                                                                                                                 |
@@ -221,22 +102,6 @@ The `crypto` object allows you to query the Blockchair API directly from WebScri
 | `crypto.getStats(crypto="bitcoin")`                  | `crypto.getStats(CRYPTO)`            | Returns all data on `CRYPTO` in JSON                                                              |
 | `crypto.getOther(url)`                               | `crypto.getOther(URL)`               | Returns JSON data from the specified Blockchair API link.                                         |
 | `crypto.setAPIKey(key)`                              | `crypto.setAPIKey(KEY)`              | Sets `KEY` as the key to be used in all queries.                                                  |
-
-## Implementation Details
-
-This information is mostly for those who would like to contribute to WebScript but are not sure about how the underlying code works. It assumes a basic understanding of how programming languages are made in general. There are some comments throughout WebScript's code to help you to understand it if you do decide to contribute.
-
-WebScript recognises the following tokens:
-
-( ) { } [ ] . , : | ! && == !=== > >= < <= + - \* \ `EOF` `Keyword` `Identifier` `String` `Number`
-
-WebScript recognises the following as keywords:
-
-prepare, as, type, prep, has, func, needs, return, loop, through, while, if, elif, else
-
-WebScript's AST contains the following nodes:
-
-Literal, Array, Var, Binary, Func, Return, For, While, Conditional, Set, Struct, Instance, Call, Get, Unary
 
 <!--<br><br><br><br><br><br><br>
 
