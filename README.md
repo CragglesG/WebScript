@@ -1,21 +1,21 @@
 # WebScript
 
-Welcome to the WebScript demo! To get started, run `./webscript` in the terminal below (at the bottom of the screen) to enter REPL.
+Welcome to the WebScript demo! To get started, run `node webscript.js` in the terminal below (at the bottom of the screen) to enter REPL.
 
-_Note: A large portion of this README has been removed/modified to make this demo somewhat easier to use._
+_Note: A large portion of this README has been removed/modified to make this demo somewhat easier to use. The usual `webscript` command also does not function normally in StackBlitz, so it has been replaced by `node webscript.js`._
 
 ## Command Line Usage
 
-You can use WebScript's REPL functionality with the `webscript` command. To enter REPL, simply run `webscript` alone:
+You can use WebScript's REPL functionality with the `node webscript.js` command. To enter REPL, simply run `node webscript.js` alone:
 
 ```
-webscript
+node webscript.js
 ```
 
 To run a WebScript file, run the following, replacing `FILE` with the desired filename:
 
 ```
-webscript FILE
+node webscript.js FILE
 ```
 
 ## Syntax
