@@ -1,6 +1,6 @@
 # WebScript
 
-WebScript is an in-development programming language for interacting with the web.
+WebScript is a programming language for interacting with the web.
 
 <!--_Hack Club Arcade Reviewers, see [here](#arcade-reviewers) (not for showcase, only scrapbook)_ !-->
 
@@ -61,7 +61,7 @@ Done! You can now use the command `webscript` to run WebScript.
 
 ### macOS
 
-_WARNING: This has not yet been tested and may not work as intended._
+_WARNING: This has not been tested and may not work as intended._
 
 This process is much the same as the process for Linux, with the only difference being slightly different download links.
 
@@ -99,7 +99,7 @@ Done! You can now use the command `webscript` to run WebScript.
 
 ### Windows
 
-_WARNING: This has not yet been tested and may not work as intended._
+_WARNING: This has not been tested and may not work as intended._
 
 Before installing WebScript, you must enable execution of local scripts. You can do this using the following command in PowerShell (Run as administrator):
 
@@ -139,7 +139,7 @@ webscript FILE --dbg
 
 ## Syntax
 
-WebScript currently adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but is constantly being modified and improved.)
+WebScript adopts a very similar syntax to [Hack Club's Easel](https://github.com/hackclub/easel/tree/main/languages/easel). (WebScript was orignally made using the tutorial, but I've modified it since)
 It also shares some similarities with the language it is written in, JavaScript. Below is a table of the current WebScript syntax:
 
 | Operation                 | Syntax                                                             | Notes                                                                                                                 |
